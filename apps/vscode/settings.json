@@ -1,0 +1,47 @@
+{
+    "csharp.experimental.debug.hotReload": true,
+    "editor.cursorSmoothCaretAnimation": "on",
+    "window.menuBarVisibility": "toggle",
+    "catppuccin.accentColor": "blue",
+    "svelte.enable-ts-plugin": true,
+    "editor.formatOnSave": true,
+    "explorer.confirmDragAndDrop": false,
+    "vim.normalModeKeyBindings": [],
+    "editor.fontFamily": "'Hack Nerd Font', 'Droid Sans Mono', 'monospace', monospace",
+    "git.openRepositoryInParentFolders": "never",
+    "C_Cpp.inlayHints.autoDeclarationTypes.enabled": true,
+    "C_Cpp.inlayHints.parameterNames.enabled": true,
+    "C_Cpp.inlayHints.parameterNames.suppressWhenArgumentContainsName": false,
+    "C_Cpp.inlayHints.referenceOperator.enabled": true,
+    "C_Cpp.inlayHints.autoDeclarationTypes.showOnLeft": true,
+    "editor.detectIndentation": false,
+    "C_Cpp.clang_format_fallbackStyle": "{ BreakBeforeBraces: Attach, IndentWidth: 4, AccessModifierOffset: -4}",
+    "deno.enable": true,
+    "explorer.confirmDelete": false,
+    "git.enableSmartCommit": true,
+    "typescript.inlayHints.enumMemberValues.enabled": true,
+    "typescript.inlayHints.functionLikeReturnTypes.enabled": true,
+    "typescript.inlayHints.parameterTypes.enabled": true,
+    "typescript.inlayHints.propertyDeclarationTypes.enabled": true,
+    "typescript.inlayHints.variableTypes.enabled": true,
+    "typescript.inlayHints.parameterNames.enabled": "all",
+    "[typescript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "git.confirmSync": false,
+    "git.autofetch": true,
+    "[json]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "prettier.tabWidth": 4,
+    "[svelte]": {
+        "editor.defaultFormatter": "svelte.svelte-vscode"
+    },
+    "explorer.confirmPasteNative": false,
+    "csharp.format.enable": false,
+    "debug.disassemblyView.showSourceCode": false,
+    "lldb.suppressUpdateNotifications": true,
+    "workbench.colorTheme": "Catppuccin Mocha",
+    "qt-qml.qmlls.useQmlImportPathEnvVar": true,
+    "qt-qml.qmlls.customExePath": "qmlls"
+}
