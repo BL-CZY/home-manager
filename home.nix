@@ -27,7 +27,6 @@ in
     nodejs
     yarn
     wl-clipboard
-    nemo
     gvfs
     python3
     gh
@@ -102,5 +101,6 @@ in
     (CONFIG_DIR + "/apps/swww/swww.nix")
     (CONFIG_DIR + "/theme.nix")
     (CONFIG_DIR + "/apps/quickshell/quickshell.nix")
+    (CONFIG_DIR + "/conf.nix")
   ];
 }
