@@ -43,5 +43,6 @@
     "lldb.suppressUpdateNotifications": true,
     "workbench.colorTheme": "Catppuccin Mocha",
     "qt-qml.qmlls.useQmlImportPathEnvVar": true,
-    "qt-qml.qmlls.customExePath": "qmlls"
+    "qt-qml.qmlls.customExePath": "qmlls",
+    "qt-qml.doNotAskForQmllsDownload": true
 }

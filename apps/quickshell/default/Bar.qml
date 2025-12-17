@@ -3,12 +3,14 @@ pragma ComponentBehavior: Bound
 import Quickshell
 import Quickshell.Io
 import QtQuick
+import QtQuick.Layouts
 import "constants.js" as Constants
 
 Scope {
     id: root
 
     property string time
+    property string bat_percentage
 
     Variants {
         model: Quickshell.screens
@@ -26,10 +28,37 @@ Scope {
 
                 implicitHeight: Constants.top_pad - 10
 
-                Text {
-                    id: clock
+                RowLayout {
+                    spacing: 10
                     anchors.centerIn: parent
-                    text: root.time
+                    width: parent.width
+
+                    Text {
+                        id: placeholder
+                        text: "wut"
+                        Layout.fillWidth: true
+                        Layout.preferredWidth: 1
+                        horizontalAlignment: Text.Left
+                        verticalAlignment: Text.AlignVCenter
+                    }
+
+                    Text {
+                        id: clock
+                        text: root.time
+                        Layout.fillWidth: true
+                        Layout.preferredWidth: 1
+                        horizontalAlignment: Text.AlignHCenter
+                        verticalAlignment: Text.AlignVCenter
+                    }
+
+                    Text {
+                        id: bat
+                        text: root.bat_percentage
+                        Layout.fillWidth: true
+                        Layout.preferredWidth: 1
+                        horizontalAlignment: Text.AlignRight
+                        verticalAlignment: Text.AlignVCenter
+                    }
                 }
             }
         }
@@ -54,5 +83,27 @@ Scope {
         repeat: true
 
         onTriggered: date_proc.running = true
+    }
+
+    Process {
+        id: bat_proc
+
+        running: true
+
+        command: ["sh", "-c", "echo $(( $(cat /sys/class/power_supply/BAT1/energy_now) * 100 / $(cat /sys/class/power_supply/BAT1/energy_full) ))"]
+
+        stdout: StdioCollector {
+            onStreamFinished: root.bat_percentage = this.text
+        }
+    }
+
+    Timer {
+        interval: 10000
+
+        running: true
+
+        repeat: true
+
+        onTriggered: bat_proc.running = true
     }
 }
