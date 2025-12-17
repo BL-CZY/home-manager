@@ -22,6 +22,7 @@ in
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = with pkgs; [
+    nemo-with-extensions
     brightnessctl
     neovim
     nodejs
@@ -91,6 +92,8 @@ in
   programs.home-manager.enable = true;
   programs.obs-studio.enable = true;
 
+  services.wl-clip-persist.enable = true;
+
   imports = [
     (CONFIG_DIR + "/apps/kitty.nix")
     (CONFIG_DIR + "/apps/hyprland.nix")
@@ -102,5 +105,6 @@ in
     (CONFIG_DIR + "/theme.nix")
     (CONFIG_DIR + "/apps/quickshell/quickshell.nix")
     (CONFIG_DIR + "/conf.nix")
+    (CONFIG_DIR + "/apps/tmux.nix")
   ];
 }

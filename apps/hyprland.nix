@@ -224,6 +224,7 @@
 
       exec-once = [
         (",swww " + builtins.toString ./swww/bg1.jpg)
+        ",quickshell"
       ];
 
       xwayland = {
