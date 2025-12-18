@@ -4,13 +4,14 @@ import Quickshell
 import Quickshell.Io
 import QtQuick
 import QtQuick.Layouts
-import "constants.js" as Constants
+import "../constants.js" as Constants
 
 Scope {
     id: root
 
     property string time
     property string bat_percentage
+    property string bat_status
 
     Variants {
         model: Quickshell.screens
@@ -51,13 +52,12 @@ Scope {
                         verticalAlignment: Text.AlignVCenter
                     }
 
-                    Text {
-                        id: bat
-                        text: root.bat_percentage
-                        Layout.fillWidth: true
+                    RowLayout {
+                        Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         Layout.preferredWidth: 1
-                        horizontalAlignment: Text.AlignRight
-                        verticalAlignment: Text.AlignVCenter
+                        layoutDirection: Qt.RightToLeft
+
+                        Bat {}
                     }
                 }
             }
