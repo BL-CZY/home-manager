@@ -93,6 +93,10 @@ in
   programs.obs-studio.enable = true;
 
   services.wl-clip-persist.enable = true;
+  services.gnome-keyring = {
+      enable = true;
+      components = ["secrets"];
+  };
 
   imports = [
     (CONFIG_DIR + "/apps/kitty.nix")

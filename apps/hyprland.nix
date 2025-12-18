@@ -223,8 +223,9 @@
       ];
 
       exec-once = [
-        (",swww " + builtins.toString ./swww/bg1.jpg)
-        ",quickshell"
+        ("swww " + builtins.toString ./swww/bg1.jpg)
+        "quickshell"
+        # "gnome-keyring-daemon --start --components=secrets"
       ];
 
       xwayland = {
