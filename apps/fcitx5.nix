@@ -10,6 +10,13 @@
         ];
 
         fcitx5.settings = {
+            addons.keyboard = {
+                globalSection = {
+                    EnableLongPress = "True";
+                    UseNewComposeBehavior = "True";
+                };
+            };
+
             inputMethod = {
                 GroupOrder."0" = "Default";
                 "Groups/0" = {
