@@ -34,13 +34,22 @@ Scope {
                     anchors.centerIn: parent
                     width: parent.width
 
-                    Text {
-                        id: placeholder
-                        text: "wut"
-                        Layout.fillWidth: true
+                    RowLayout {
+                        Layout.alignment: Qt.AlignLeft | Qt.AlignVCenter
                         Layout.preferredWidth: 1
-                        horizontalAlignment: Text.Left
-                        verticalAlignment: Text.AlignVCenter
+                        layoutDirection: Qt.LeftToRight
+                        spacing: 20
+
+                        Text {
+                            id: placeholder
+                            text: "󱄅 "
+                            font.pixelSize: 24
+                            color: "#4dd8ff"
+                            horizontalAlignment: Text.Left
+                            verticalAlignment: Text.AlignVCenter
+                        }
+
+                        Workspaces {}
                     }
 
                     Text {
