@@ -33,10 +33,10 @@
       general = {
         gaps_in = 5;
         gaps_out = 10;
-        border_size = 2;
+        border_size = 1;
 
-        "col.active_border" = "rgba(33ccffee) rgba(00ff99ee) 45deg";
-        "col.inactive_border" = "rgba(595959aa)";
+        "col.active_border" = "rgb(585b70)";
+        "col.inactive_border" = "rgb(585b70)";
 
         resize_on_border = false;
         allow_tearing = false;
@@ -81,11 +81,12 @@
           "almostLinear, 0.5, 0.5, 0.75, 1"
           "quick, 0.15, 0, 0.1, 1"
           "custom, 0, 1, 0, 1"
+          "default, 0, 1, 0, 1"
           "overshoot, 0.05, 0.9, 0.64, 1.1"
         ];
 
         animation = [
-          "global, 1, 10, default"
+          "global, 1, 7, custom"
           "border, 1, 5.39, easeOutQuint"
           "windows, 1, 4.79, easeOutQuint"
           "windowsIn, 1, 4.1, easeOutQuint, popin 87%"
@@ -93,13 +94,11 @@
           "fadeIn, 1, 1.73, almostLinear"
           "fadeOut, 1, 1.46, almostLinear"
           "fade, 1, 3.03, quick"
-          "layers, 1, 3.81, easeOutQuint"
-          "layersIn, 1, 4, easeOutQuint, fade"
-          "layersOut, 1, 1.5, linear, fade"
           "fadeLayersIn, 1, 1.79, almostLinear"
           "fadeLayersOut, 1, 1.39, almostLinear"
           "workspaces, 1, 7, custom, slide"
           "zoomFactor, 1, 7, quick"
+          "layers, 1, 10, custom"
         ];
       };
 
@@ -162,9 +161,10 @@
         "$mainMod, C, killactive"
         "$mainMod SHIFT, M, exit"
         "$mainMod, E, exec, $fileManager"
-        "$mainMod, V, togglefloating"
+        "$mainMod, W, togglefloating"
         "$mainMod, R, exec, $menu"
         "$mainMod, P, pseudo"
+        "$mainMod, V, exec, kitty --class clipse -e 'clipse'"
         "$mainMod, O, togglesplit"
 
         "$mainMod, H, movefocus, l"
@@ -239,6 +239,17 @@
       windowrule = [
         "suppressevent maximize, class:.*"
         "nofocus,class:^$,title:^$,xwayland:1,floating:1,fullscreen:0,pinned:0"
+      ];
+
+      windowrulev2 = [
+        "float,class:^(kitty)$,title:^(kitty)$"
+        "size 50% 60%,class:^(kitty)$,title:^(kitty)$"
+        
+        "float,class:nemo"
+        "size 50% 60%,class:nemo"
+        "float,class:Nemo-preview-start"
+        "float,class:(clipse)"
+        "size 622 652,class:(clipse)"
       ];
 
       layerrule = [

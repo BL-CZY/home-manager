@@ -38,6 +38,7 @@ in
 
     # neovim LSPs
     pyright
+    nixd
     # # Adds the 'hello' command to your environment. It prints a friendly
     # # "Hello, world!" when run.
     # pkgs.hello
@@ -96,6 +97,7 @@ in
   programs.obs-studio.enable = true;
 
   services.wl-clip-persist.enable = true;
+  services.clipse.enable = true;
   services.gnome-keyring = {
       enable = true;
       components = ["secrets"];
