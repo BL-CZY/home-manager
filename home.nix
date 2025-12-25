@@ -115,5 +115,6 @@ in
     (CONFIG_DIR + "/apps/quickshell/quickshell.nix")
     (CONFIG_DIR + "/conf.nix")
     (CONFIG_DIR + "/apps/tmux.nix")
+    (CONFIG_DIR + "/apps/yazi.nix")
   ];
 }
