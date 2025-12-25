@@ -211,8 +211,8 @@
         ",XF86AudioLowerVolume, exec, qs ipc call volume decrease"
         ",XF86AudioMute, exec, qs ipc call volume toggleMute"
         ",XF86AudioMicMute, exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
-        ",XF86MonBrightnessUp, exec, brightnessctl -e4 -n2 set 5%+"
-        ",XF86MonBrightnessDown, exec, brightnessctl -e4 -n2 set 5%-"
+        ",XF86MonBrightnessUp, exec, qs ipc call brightness increase"
+        ",XF86MonBrightnessDown, exec, qs ipc call brightness decrease"
       ];
 
       bindl = [
@@ -238,6 +238,10 @@
       windowrule = [
         "suppressevent maximize, class:.*"
         "nofocus,class:^$,title:^$,xwayland:1,floating:1,fullscreen:0,pinned:0"
+      ];
+
+      layerrule = [
+        "animation slide bottom, osd"
       ];
     };
   };

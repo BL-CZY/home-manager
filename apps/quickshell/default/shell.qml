@@ -106,4 +106,5 @@ Scope {
 
     Bar {}
     Volume {}
+    Brightness {}
 }

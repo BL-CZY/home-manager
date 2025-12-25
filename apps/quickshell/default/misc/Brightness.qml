@@ -15,11 +15,10 @@ Scope {
     property bool shouldBeVisible: false
     // property bool shouldBeVisible: true
 
-    property int volume: 0
-    property bool isMuted: false
+    property int brightness: 0
 
     IpcHandler {
-        target: "volume"
+        target: "brightness"
         function open(): void {
             root.shouldBeVisible = true;
             timer.running = false;
@@ -28,17 +27,12 @@ Scope {
 
         function increase(): void {
             open();
-            inc_volume.running = true;
+            inc_brightness.running = true;
         }
 
         function decrease(): void {
             open();
-            dec_volume.running = true;
-        }
-
-        function toggleMute(): void {
-            open();
-            toggle_mute.running = true;
+            dec_brightness.running = true;
         }
     }
 
@@ -78,14 +72,14 @@ Scope {
                         spacing: 15
 
                         IconImage {
-                            source: Quickshell.iconPath(Scripts.getVolumeIcon(root.volume, root.isMuted))
+                            source: Quickshell.iconPath(Scripts.getBrightnessIcon(root.brightness))
                             implicitWidth: 22
                             implicitHeight: 22
                         }
 
                         ProgressBar {
                             id: control
-                            value: root.volume / 100
+                            value: root.brightness / 100
                             implicitWidth: 120
                             implicitHeight: 6
 
@@ -118,7 +112,7 @@ Scope {
                         }
 
                         Text {
-                            text: root.volume + "%"
+                            text: root.brightness + "%"
                             color: "white"
                             font.pixelSize: 14
                             font.weight: Font.Medium
@@ -140,60 +134,54 @@ Scope {
     }
 
     Process {
-        id: get_volume
+        id: get_brightness
 
         running: true
 
-        command: ["wpctl", "get-volume", "@DEFAULT_AUDIO_SINK@"]
+        command: ["sh", "-c", "echo $(brightnessctl m):$(brightnessctl g)"]
 
         stdout: StdioCollector {
             onStreamFinished: {
-                root.volume = Number(this.text.trim().split(" ")[1]) * 100;
+                const values = this.text.split(":").map(Number);
 
-                if (this.text.indexOf("MUTED") !== -1) {
-                    root.isMuted = true;
-                } else {
-                    root.isMuted = false;
+                if (values.length === 2 && values[0] > 0) {
+                    const [max, current] = values;
+                    const percentage = current / max;
+
+                    // The 4th root "linearization"
+                    const rooted_percentage = (Math.pow(percentage, 0.25) * 100);
+                    const rounded_percentage = Math.round(rooted_percentage / 5) * 5;
+                    const displayed_percentage = Math.round((rounded_percentage - 20) / 0.8);
+
+                    root.brightness = displayed_percentage;
                 }
             }
         }
     }
 
     Process {
-        id: inc_volume
+        id: inc_brightness
 
         running: false
 
-        command: ["wpctl", "set-volume", "-l", "1", "@DEFAULT_AUDIO_SINK@", "5%+"]
+        command: ["brightnessctl", "-e4", "-n2", "set", "5%+"]
 
         stdout: StdioCollector {
             onStreamFinished: {
-                get_volume.running = true;
+                get_brightness.running = true;
             }
         }
     }
 
     Process {
-        id: dec_volume
+        id: dec_brightness
 
         running: false
 
-        command: ["wpctl", "set-volume", "@DEFAULT_AUDIO_SINK@", "5%-"]
+        command: ["brightnessctl", "-e4", "-n2", "set", "5%-"]
 
         stdout: StdioCollector {
-            onStreamFinished: get_volume.running = true
-        }
-    }
-
-    Process {
-        id: toggle_mute
-
-        running: false
-
-        command: ["wpctl", "set-mute", "@DEFAULT_AUDIO_SINK@", root.isMuted ? "0" : "1"]
-
-        stdout: StdioCollector {
-            onStreamFinished: get_volume.running = true
+            onStreamFinished: get_brightness.running = true
         }
     }
 }

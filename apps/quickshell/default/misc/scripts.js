@@ -9,3 +9,13 @@ function getVolumeIcon(volumeLevel, isMuted) {
         return "audio-volume-high";
     }
 }
+
+function getBrightnessIcon(brightnessLevel) {
+    if (brightnessLevel < 30) {
+        return "display-brightness-low";
+    } else if (brightnessLevel < 70) {
+        return "display-brightness-medium";
+    } else {
+        return "display-brightness-high";
+    }
+}
