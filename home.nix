@@ -35,10 +35,19 @@ in
     grim
     slurp
     swappy
+    btop
+    cmatrix
+    unzip
 
     # neovim LSPs
     pyright
+    rust-analyzer
+    coc-clangd
+    svelte-language-server
+    typescript-language-server
+    lua-language-server
     nixd
+    vscode-langservers-extracted
     # # Adds the 'hello' command to your environment. It prints a friendly
     # # "Hello, world!" when run.
     # pkgs.hello

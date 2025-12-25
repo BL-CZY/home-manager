@@ -4,7 +4,7 @@
         enable = true;
         enableZshIntegration = true;
         settings = {
-            openner = {
+            opener = {
                 edit = [
                     {
                         run = "nvim \"$@\"";
