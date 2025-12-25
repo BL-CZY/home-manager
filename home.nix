@@ -32,6 +32,9 @@ in
     python3
     gh
     lazygit
+    grim
+    slurp
+    swappy
 
     # neovim LSPs
     pyright

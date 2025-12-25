@@ -47,27 +47,41 @@ Scope {
                         var ctx = getContext("2d");
                         ctx.clearRect(0, 0, width, height);
 
-                        ctx.fillStyle = "white";
+                        ctx.fillStyle = Constants.background;
+                        ctx.strokeStyle = Constants.surface1; // Set your border color here
+                        ctx.lineWidth = 2;           // Set border thickness
 
-                        ctx.globalCompositeOperation = "xor";
+                        var x = 0, y = 0, w = width, h = height, r = 20;
 
-                        var x = 0, y = 0, w = width - x * 2, h = height - y, r = 20;
+                        // Adjust x, y, w, h slightly if you want the border to stay
+                        // strictly inside the canvas boundaries
+                        var lw = ctx.lineWidth;
+                        var offset = lw / 2;
+                        var adjX = x + offset;
+                        var adjY = y + offset;
+                        var adjW = w - lw;
+                        var adjH = h - lw;
 
                         ctx.beginPath();
-                        ctx.moveTo(x + r, y);
-                        ctx.lineTo(x + w - r, y);
-                        ctx.arcTo(x + w, y, x + w, y + r, r);
-                        ctx.lineTo(x + w, y + h - r);
-                        ctx.arcTo(x + w, y + h, x + w - r, y + h, r);
-                        ctx.lineTo(x + r, y + h);
-                        ctx.arcTo(x, y + h, x, y + h - r, r);
-                        ctx.lineTo(x, y + r);
-                        ctx.arcTo(x, y, x + r, y, r);
+                        ctx.moveTo(adjX + r, adjY);
+                        ctx.lineTo(adjX + adjW - r, adjY);
+                        ctx.arcTo(adjX + adjW, adjY, adjX + adjW, adjY + r, r);
+                        ctx.lineTo(adjX + adjW, adjY + adjH - r);
+                        ctx.arcTo(adjX + adjW, adjY + adjH, adjX + adjW - r, adjY + adjH, r);
+                        ctx.lineTo(adjX + r, adjY + adjH);
+                        ctx.arcTo(adjX, adjY + adjH, adjX, adjY + adjH - r, r);
+                        ctx.lineTo(adjX, adjY + r);
+                        ctx.arcTo(adjX, adjY, adjX + r, adjY, r);
                         ctx.closePath();
 
-                        ctx.fillRect(0, 0, width, height);
-
+                        // 1. Fill the shape
+                        ctx.globalCompositeOperation = "xor";
+                        ctx.fillRect(0, 0, width, height); // This uses your XOR logic
                         ctx.fill();
+
+                        // 2. Draw the border
+                        ctx.globalCompositeOperation = "source-over"; // Reset to normal drawing
+                        ctx.stroke();
                     }
                 }
             }
@@ -81,6 +95,8 @@ Scope {
             bottom: true
         }
 
+        color: Constants.background
+
         implicitWidth: Constants.pad
     }
 
@@ -91,6 +107,8 @@ Scope {
             bottom: true
         }
 
+        color: Constants.background
+
         implicitWidth: Constants.pad
     }
 
@@ -100,6 +118,8 @@ Scope {
             right: true
             bottom: true
         }
+
+        color: Constants.background
 
         implicitHeight: Constants.pad
     }

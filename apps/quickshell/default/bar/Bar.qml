@@ -21,6 +21,8 @@ Scope {
                 required property var modelData
                 screen: modelData
 
+                color: Constants.background
+
                 anchors {
                     top: true
                     left: true
@@ -57,6 +59,7 @@ Scope {
                         text: root.time
                         Layout.fillWidth: true
                         Layout.preferredWidth: 1
+                        color: Constants.text
                         horizontalAlignment: Text.AlignHCenter
                         verticalAlignment: Text.AlignVCenter
                     }

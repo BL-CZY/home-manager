@@ -3,6 +3,7 @@ import QtQuick.Layouts
 import QtQuick
 import QtQuick.Controls
 import "bat.js" as Scripts
+import "../constants.js" as Constants
 
 Item {
     id: root
@@ -39,6 +40,8 @@ Item {
             id: icon
             anchors.verticalCenter: parent.verticalCenter
             anchors.horizontalCenter: parent.horizontalCenter
+            color: Constants.text
+            font.pixelSize: 20
 
             // I use the first battery because the 0th one is broken
             text: Scripts.percentage_to_icon(UPower.devices.values[1].percentage, UPower.onBattery)
