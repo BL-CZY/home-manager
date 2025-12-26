@@ -8,6 +8,7 @@ import QtQuick.Layouts
 import Quickshell.Widgets
 import Quickshell.Wayland
 import "./scripts.js" as Scripts
+import "../constants.js" as Constants
 
 Scope {
     id: root
@@ -63,9 +64,9 @@ Scope {
 
                 Rectangle {
                     anchors.centerIn: parent
-                    color: Qt.rgba(0.1, 0.1, 0.1) // Dark translucent background
+                    color: Constants.background
                     radius: 12
-                    border.color: Qt.rgba(1, 1, 1, 0.1)
+                    border.color: Constants.surface1
                     border.width: 1
 
                     // Add a drop shadow effect or blur if needed
@@ -93,7 +94,7 @@ Scope {
                             background: Rectangle {
                                 implicitWidth: 180
                                 implicitHeight: 6
-                                color: Qt.rgba(1, 1, 1, 0.1)
+                                color: Constants.surface0
                                 radius: 3
                             }
 
@@ -105,8 +106,7 @@ Scope {
                                     width: control.visualPosition * parent.width
                                     height: parent.height
                                     radius: 3
-                                    color: "#3498db" // Nice blue accent
-
+                                    color: Constants.green
                                     Behavior on width {
                                         NumberAnimation {
                                             duration: 150
@@ -119,7 +119,7 @@ Scope {
 
                         Text {
                             text: root.volume + "%"
-                            color: "white"
+                            color: Constants.text
                             font.pixelSize: 14
                             font.weight: Font.Medium
                             font.family: "Sans Serif"

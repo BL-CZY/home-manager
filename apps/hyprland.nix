@@ -156,6 +156,7 @@
       ### KEYBINDS ###
       ###################
       bind = [
+        "$mainMod CTRL SHIFT, L, exec, hyprlock"
         "$mainMod, return, exec, $terminal"
         "ALT, space, exec, $terminal python3"
         "$mainMod, F, exec, $browser"

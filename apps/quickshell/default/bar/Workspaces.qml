@@ -1,6 +1,7 @@
 import QtQuick
 import QtQuick.Layouts
 import Quickshell.Hyprland
+import "../constants.js" as Constants
 
 Item {
     id: root
@@ -36,7 +37,7 @@ Item {
                     implicitWidth: parent.modelData.active ? 70 : 15
                     implicitHeight: 15
                     radius: 100
-                    color: parent.modelData.id < 0 ? "#03fc39" : parent.modelData.active ? "#4dd8ff" : "#7c008a"
+                    color: parent.modelData.id < 0 ? Constants.green : parent.modelData.active ? Constants.sky : Constants.lavender
 
                     Behavior on color {
                         ColorAnimation {
