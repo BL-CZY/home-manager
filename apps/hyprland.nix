@@ -229,6 +229,7 @@
       exec-once = [
         ("swww " + builtins.toString ./swww/bg1.jpg)
         "quickshell"
+        "nm-applet"
         # "gnome-keyring-daemon --start --components=secrets"
       ];
 

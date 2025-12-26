@@ -39,6 +39,7 @@ in
     cmatrix
     unzip
     gcc
+    networkmanagerapplet
 
     # neovim LSPs
     pyright
@@ -128,5 +129,6 @@ in
     (CONFIG_DIR + "/conf.nix")
     (CONFIG_DIR + "/apps/tmux.nix")
     (CONFIG_DIR + "/apps/yazi.nix")
+    (CONFIG_DIR + "/apps/hyprlock.nix")
   ];
 }
