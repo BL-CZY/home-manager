@@ -20,6 +20,7 @@ Item {
             model: Hyprland.workspaces
 
             delegate: MouseArea {
+                required property var modelData
                 Layout.preferredWidth: dot.implicitWidth
                 Layout.preferredHeight: dot.implicitHeight
                 Layout.alignment: Qt.AlignVCenter
@@ -32,10 +33,10 @@ Item {
                     id: dot
                     anchors.centerIn: parent
 
-                    implicitWidth: modelData.active ? 70 : 15
+                    implicitWidth: parent.modelData.active ? 70 : 15
                     implicitHeight: 15
                     radius: 100
-                    color: modelData.id < 0 ? "#03fc39" : modelData.active ? "#4dd8ff" : "#7c008a"
+                    color: parent.modelData.id < 0 ? "#03fc39" : parent.modelData.active ? "#4dd8ff" : "#7c008a"
 
                     Behavior on color {
                         ColorAnimation {

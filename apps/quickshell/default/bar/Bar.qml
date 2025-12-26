@@ -68,8 +68,10 @@ Scope {
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         Layout.preferredWidth: 1
                         layoutDirection: Qt.RightToLeft
+                        spacing: 20
 
                         Bat {}
+                        SysTray {}
                     }
                 }
             }

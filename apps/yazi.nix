@@ -24,5 +24,10 @@
                 ];
             };
         };
+        theme = {
+            flavor = {
+                dark = "catppuccin-mocha";
+            };
+        };
     };
 }

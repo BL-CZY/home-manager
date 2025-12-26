@@ -38,6 +38,7 @@ in
     btop
     cmatrix
     unzip
+    gcc
 
     # neovim LSPs
     pyright
@@ -48,6 +49,8 @@ in
     lua-language-server
     nixd
     vscode-langservers-extracted
+    qt6.qtdeclarative
+    eslint
     # # Adds the 'hello' command to your environment. It prints a friendly
     # # "Hello, world!" when run.
     # pkgs.hello

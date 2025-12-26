@@ -10,6 +10,7 @@ Item {
 
     property int percentage
     Layout.fillWidth: true
+    Layout.preferredWidth: 1
 
     MouseArea {
         id: mouseArea
