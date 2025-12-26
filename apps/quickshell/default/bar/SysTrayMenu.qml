@@ -2,6 +2,7 @@ pragma ComponentBehavior: Bound
 
 import Quickshell
 import QtQuick
+import Quickshell.Wayland
 import QtQuick.Layouts
 import Quickshell.Widgets
 import "../constants.js" as Constants
@@ -23,6 +24,7 @@ Item {
     PanelWindow {
         id: popup
         visible: root.isVisible
+        WlrLayershell.namespace: "tray_menu"
 
         implicitWidth: 1000
         implicitHeight: 2000
@@ -51,14 +53,31 @@ Item {
             anchors.right: parent.right
             radius: 10
 
-            implicitWidth: menuColumn.implicitWidth + 16 // Add padding
-            implicitHeight: menuColumn.implicitHeight + 16 // Add padding
+            implicitWidth: root.isVisible ? menuColumn.implicitWidth + 16 : 0 // Add padding
+            implicitHeight: root.isVisible ? menuColumn.implicitHeight + 16 : 0 // Add padding
+
+            Behavior on implicitHeight {
+                NumberAnimation {
+                    duration: 700
+                    easing.type: Easing.OutExpo
+                }
+            }
+
+            Behavior on implicitWidth {
+                NumberAnimation {
+                    duration: 700
+                    easing.type: Easing.OutExpo
+                }
+            }
+
+            clip: true
 
             ColumnLayout {
                 id: menuColumn
                 anchors.margins: 8
                 spacing: 4
-                anchors.centerIn: parent
+                anchors.top: parent.top
+                anchors.horizontalCenter: parent.horizontalCenter
 
                 Repeater {
                     model: menus.children
@@ -66,6 +85,7 @@ Item {
                     delegate: Loader {
                         id: entryLoader
                         required property QsMenuEntry modelData
+                        property bool submenuOpen: false
 
                         Layout.fillWidth: true
                         sourceComponent: modelData.isSeparator ? separator : entry
@@ -84,45 +104,56 @@ Item {
 
                         Component {
                             id: entry
-                            MouseArea {
-                                id: mouseArea
-                                implicitWidth: entryLayout.implicitWidth + 20
-                                implicitHeight: 32
-                                hoverEnabled: true
-                                enabled: entryLoader.modelData.enabled
+                            ColumnLayout {
+                                MouseArea {
+                                    id: mouseArea
+                                    implicitWidth: entryLayout.implicitWidth + 20
+                                    implicitHeight: 32
+                                    hoverEnabled: true
+                                    enabled: entryLoader.modelData.enabled
 
-                                Rectangle {
-                                    anchors.fill: parent
-                                    color: mouseArea.containsMouse ? Constants.surface0 : "transparent"
-                                    radius: 5
-                                }
-
-                                RowLayout {
-                                    id: entryLayout
-                                    anchors.fill: parent
-                                    anchors.leftMargin: 8
-                                    anchors.rightMargin: 8
-                                    spacing: 10
-
-                                    IconImage {
-                                        source: entryLoader.modelData.icon
-                                        implicitWidth: 16
-                                        implicitHeight: 16
-                                        visible: entryLoader.modelData.icon !== ""
+                                    Rectangle {
+                                        anchors.fill: parent
+                                        color: mouseArea.containsMouse ? Constants.surface0 : "transparent"
+                                        radius: 5
                                     }
 
-                                    Text {
-                                        Layout.fillWidth: true
-                                        text: entryLoader.modelData.text.replace("_", "")
-                                        color: entryLoader.modelData.enabled ? "white" : "#666666"
-                                        font.pixelSize: 13
+                                    RowLayout {
+                                        id: entryLayout
+                                        anchors.fill: parent
+                                        anchors.leftMargin: 8
+                                        anchors.rightMargin: 8
+                                        spacing: 10
+
+                                        IconImage {
+                                            source: entryLoader.modelData.icon
+                                            implicitWidth: 16
+                                            implicitHeight: 16
+                                            visible: entryLoader.modelData.icon !== ""
+                                        }
+
+                                        Text {
+                                            Layout.fillWidth: true
+                                            text: entryLoader.modelData.text.replace("_", "")
+                                            color: entryLoader.modelData.enabled ? "white" : "#666666"
+                                            font.pixelSize: 13
+                                        }
+
+                                        // Submenu Indicator
+                                        Text {
+                                            text: "›"
+                                            visible: entryLoader.modelData.hasChildren
+                                            color: "grey"
+                                        }
                                     }
 
-                                    // Submenu Indicator
-                                    Text {
-                                        text: "›"
-                                        visible: entryLoader.modelData.hasChildren
-                                        color: "grey"
+                                    onClicked: {
+                                        if (!entryLoader.modelData.hasChildren) {
+                                            entryLoader.modelData.triggered();
+                                            root.requestClose();
+                                        } else {
+                                            entryLoader.submenuOpen = !entryLoader.submenuOpen;
+                                        }
                                     }
                                 }
 
@@ -139,16 +170,10 @@ Item {
                                     id: submenu
                                     SysTraySubMenu {
                                         menu: entryLoader.modelData
-                                    }
-                                }
-
-                                onClicked: {
-                                    if (!entryLoader.modelData.hasChildren) {
-                                        // 1. Tell the app to do the thing
-                                        entryLoader.modelData.triggered();
-                                        root.requestClose();
-                                    } else {
-                                        // Logic for opening submenus would go here
+                                        isVisible: entryLoader.submenuOpen
+                                        onRequestClose: {
+                                            entryLoader.submenuOpen = false;
+                                        }
                                     }
                                 }
                             }

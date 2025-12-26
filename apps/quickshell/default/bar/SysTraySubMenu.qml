@@ -7,9 +7,13 @@ import "../constants.js" as Constants
 
 Item {
     id: root
-
     required property QsMenuHandle menu
+    required property bool isVisible
     signal requestClose
+
+    // Calculate dimensions for the parent window to wrap around
+    implicitWidth: isVisible ? menuColumn.implicitWidth + 16 : 0
+    implicitHeight: isVisible ? menuColumn.implicitHeight + 16 : 0
 
     QsMenuOpener {
         id: menus
@@ -18,27 +22,26 @@ Item {
 
     ColumnLayout {
         id: menuColumn
+        anchors.fill: parent
         anchors.margins: 8
         spacing: 4
-        anchors.centerIn: parent
+        visible: root.isVisible
 
         Repeater {
             model: menus.children
-
             delegate: Loader {
                 id: entryLoader
                 required property QsMenuEntry modelData
-
                 Layout.fillWidth: true
                 sourceComponent: modelData.isSeparator ? separator : entry
 
                 Component {
                     id: separator
                     Rectangle {
-                        implicitWidth: parent.width
                         implicitHeight: 1
                         color: Constants.surface1
                         opacity: 0.5
+                        Layout.fillWidth: true
                         Layout.topMargin: 4
                         Layout.bottomMargin: 4
                     }
@@ -48,10 +51,9 @@ Item {
                     id: entry
                     MouseArea {
                         id: mouseArea
-                        implicitWidth: entryLayout.implicitWidth + 20
+                        implicitWidth: entryLayout.implicitWidth + 40 // Extra space for arrow
                         implicitHeight: 32
                         hoverEnabled: true
-                        enabled: entryLoader.modelData.enabled
 
                         Rectangle {
                             anchors.fill: parent
@@ -88,13 +90,23 @@ Item {
                             }
                         }
 
+                        // --- THE RECURSION LOGIC ---
+                        // We load the WINDOW container, which inside contains THIS file
+                        Loader {
+                            id: submenuLoader
+                            active: mouseArea.containsMouse && entryLoader.modelData.hasChildren
+                            source: "SubMenuWindow.qml"
+                            onLoaded: {
+                                item.menu = entryLoader.modelData; // Pass the entry as the handle
+                                item.parentPtr = mouseArea;        // Pass ref for positioning
+                                item.requestClose.connect(root.requestClose);
+                            }
+                        }
+
                         onClicked: {
                             if (!entryLoader.modelData.hasChildren) {
-                                // 1. Tell the app to do the thing
                                 entryLoader.modelData.triggered();
                                 root.requestClose();
-                            } else {
-                                // Logic for opening submenus would go here
                             }
                         }
                     }
