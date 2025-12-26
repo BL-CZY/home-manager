@@ -1,10 +1,12 @@
+//@ pragma UseQApplication
+
 import Quickshell
 import QtQuick
 import qs.bar
 import qs.misc
 import "constants.js" as Constants
 
-Scope {
+ShellRoot {
     id: root
 
     Variants {
