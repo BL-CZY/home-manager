@@ -18,6 +18,7 @@
       background = [
         {
           monitor = "";
+          path = builtins.toString ./swww/bg1.jpg;
           blur_passes = 3;
           contrast = 0.8916;
           brightness = 0.8172;
